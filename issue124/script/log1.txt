@@ -1,0 +1,105 @@
+
+H:\test>cd H:\test\
+
+H:\test>ebHevcEncApp.exe -c enc.cfg
+-------------------------------------------
+SVT-HEVC Encoder
+SVT [version]:  SVT-HEVC Encoder Lib v1.3.0
+SVT [build]  : Visual Studio 2013 64 bit
+LIB Build date: Mar  7 2019 16:02:51
+-------------------------------------------
+Number of logical cores available: 12
+Number of PPCS 152
+-------------------------------------------
+SVT [config]: Main10 Profile    Tier (auto)     Level (auto)
+SVT [config]: EncoderMode / LatencyMode / Tune                                  : 12 / 0 / 0
+SVT [config]: EncoderBitDepth / CompressedTenBitFormat / EncoderColorFormat     : 10 / 0 / 1
+SVT [config]: SourceWidth / SourceHeight                                        : 4096 / 2160
+SVT [config]: FrameRate / Gop Size                                              : 60 / 64
+SVT [config]: HierarchicalLevels / BaseLayerSwitchMode / PredStructure          : 3 / 0 / 2
+SVT [config]: BRC Mode / QP  / LookaheadDistance / SceneChange                  : CQP / 32 / 17 / 1
+SVT [config]: BitRateReduction / ImproveSharpness                               : 1 / 1
+-------------------------------------------
+Encoding       300
+SUMMARY --------------------------------- Channel 1  --------------------------------
+Total Frames            Frame Rate              Byte Count              Bitrate
+         300            60.00 fps                  4207829              6732.53 kbps
+
+
+Channel 1
+Average Speed:          30.27 fps
+Total Encoding Time:    9910 ms
+Total Execution Time:   11804 ms
+Average Latency:        1112 ms
+Max Latency:            1457 ms
+Encoder finished
+
+H:\test>ffmpeg.exe -i test.hevc -pix_fmt yuv420p10 dec.yuv
+ffmpeg version N-92681-g0e833f615b Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 8.2.1 (GCC) 20181201
+  configuration: --disable-static --enable-shared --enable-gpl --enable-version3 --enable-sdl2 --enable-fontconfig --enable-gnutls --enable-iconv --enable-libass --enable-libbluray --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libopus --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libtheora --enable-libtwolame --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libzimg --enable-lzma --enable-zlib --enable-gmp --enable-libvidstab --enable-libvorbis --enable-libvo-amrwbenc --enable-libmysofa --enable-libspeex --enable-libxvid --enable-libaom --enable-libmfx --enable-amf --enable-ffnvcodec --enable-cuvid --enable-d3d11va --enable-nvenc --enable-nvdec --enable-dxva2 --enable-avisynth --enable-libopenmpt
+  libavutil      56. 24.101 / 56. 24.101
+  libavcodec     58. 42.100 / 58. 42.100
+  libavformat    58. 24.100 / 58. 24.100
+  libavdevice    58.  6.101 / 58.  6.101
+  libavfilter     7. 46.101 /  7. 46.101
+  libswscale      5.  4.100 /  5.  4.100
+  libswresample   3.  4.100 /  3.  4.100
+  libpostproc    55.  4.100 / 55.  4.100
+Input #0, hevc, from 'test.hevc':
+  Duration: N/A, bitrate: N/A
+    Stream #0:0: Video: hevc (Main 10), yuv420p10le(tv), 4096x2160, 25 fps, 25 tbr, 1200k tbn, 25 tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (hevc (native) -> rawvideo (native))
+Press [q] to stop, [?] for help
+Output #0, rawvideo, to 'dec.yuv':
+  Metadata:
+    encoder         : Lavf58.24.100
+    Stream #0:0: Video: rawvideo (Y3[11][10] / 0xA0B3359), yuv420p10le, 4096x2160, q=2-31, 3317760 kb/s, 25 fps, 25 tbn, 25 tbc
+    Metadata:
+      encoder         : Lavc58.42.100 rawvideo
+frame=  300 fps= 44 q=-0.0 Lsize= 7776000kB time=00:00:12.00 bitrate=5308416.0kbits/s speed=1.78x
+video:7776000kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.000000%
+
+H:\test>ffmpeg.exe -pix_fmt yuv420p10 -s 4096x2160 -framerate 60 -i H:\Seq\Netflix_FoodMarket2_4096x2160_60_10bit_420.yuv  -pix_fmt yuv420p10 -s 4096x2160 -framerate 60 -i dec.yuv -lavfi "ssim;[0:v][1:v]psnr" -f null -
+ffmpeg version N-92681-g0e833f615b Copyright (c) 2000-2018 the FFmpeg developers
+  built with gcc 8.2.1 (GCC) 20181201
+  configuration: --disable-static --enable-shared --enable-gpl --enable-version3 --enable-sdl2 --enable-fontconfig --enable-gnutls --enable-iconv --enable-libass --enable-libbluray --enable-libfreetype --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenjpeg --enable-libopus --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libtheora --enable-libtwolame --enable-libvpx --enable-libwavpack --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxml2 --enable-libzimg --enable-lzma --enable-zlib --enable-gmp --enable-libvidstab --enable-libvorbis --enable-libvo-amrwbenc --enable-libmysofa --enable-libspeex --enable-libxvid --enable-libaom --enable-libmfx --enable-amf --enable-ffnvcodec --enable-cuvid --enable-d3d11va --enable-nvenc --enable-nvdec --enable-dxva2 --enable-avisynth --enable-libopenmpt
+  libavutil      56. 24.101 / 56. 24.101
+  libavcodec     58. 42.100 / 58. 42.100
+  libavformat    58. 24.100 / 58. 24.100
+  libavdevice    58.  6.101 / 58.  6.101
+  libavfilter     7. 46.101 /  7. 46.101
+  libswscale      5.  4.100 /  5.  4.100
+  libswresample   3.  4.100 /  3.  4.100
+  libpostproc    55.  4.100 / 55.  4.100
+[rawvideo @ 0000024243b63c40] Estimating duration from bitrate, this may be inaccurate
+Input #0, rawvideo, from 'H:\Seq\Netflix_FoodMarket2_4096x2160_60_10bit_420.yuv':
+  Duration: 00:00:05.00, start: 0.000000, bitrate: 12740198 kb/s
+    Stream #0:0: Video: rawvideo (Y3[11][10] / 0xA0B3359), yuv420p10le, 4096x2160, 12740198 kb/s, 60 tbr, 60 tbn, 60 tbc [rawvideo @ 0000024243b66780] Estimating duration from bitrate, this may be inaccurate
+Input #1, rawvideo, from 'dec.yuv':
+  Duration: 00:00:05.00, start: 0.000000, bitrate: 12740198 kb/s
+    Stream #1:0: Video: rawvideo (Y3[11][10] / 0xA0B3359), yuv420p10le, 4096x2160, 12740198 kb/s, 60 tbr, 60 tbn, 60 tbc Stream mapping:
+  Stream #0:0 (rawvideo) -> ssim:main
+  Stream #0:0 (rawvideo) -> psnr:main
+  Stream #1:0 (rawvideo) -> ssim:reference
+  Stream #1:0 (rawvideo) -> psnr:reference
+  ssim -> Stream #0:0 (wrapped_avframe)
+  psnr -> Stream #0:1 (wrapped_avframe)
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf58.24.100
+    Stream #0:0: Video: wrapped_avframe, yuv420p10le(progressive), 4096x2160, q=2-31, 200 kb/s, 60 fps, 60 tbn, 60 tbc
+    Metadata:
+      encoder         : Lavc58.42.100 wrapped_avframe
+    Stream #0:1: Video: wrapped_avframe, yuv420p10le, 4096x2160, q=2-31, 200 kb/s, 60 fps, 60 tbn, 60 tbc
+    Metadata:
+      encoder         : Lavc58.42.100 wrapped_avframe
+frame=  300 fps= 20 q=-0.0 Lq=-0.0 size=N/A time=00:00:05.00 bitrate=N/A speed=0.327x
+video:314kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+[Parsed_ssim_0 @ 0000024243b8e400] SSIM Y:0.749958 (6.019875) U:0.828002 (7.644774) V:0.823519 (7.533031) All:0.775226 (6.482536)
+[Parsed_psnr_1 @ 0000024243b8e740] PSNR y:16.256710 u:16.503580 v:15.697605 average:16.197662 min:9.628888 max:40.338350
+
+
+Press Enter or Esc to close console...
